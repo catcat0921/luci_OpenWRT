@@ -193,13 +193,14 @@ form.reset=false
 form.submit=false
 tb=form:section(Table,e)
 st=tb:option(DummyValue,"state",translate("State"))
-st.template="openclash/cfg_check"
 nm=tb:option(DummyValue,"name",translate("Config Alias"))
+sb=tb:option(DummyValue,"name",translate("Subscription Info"))
 mt=tb:option(DummyValue,"mtime",translate("Update Time"))
 sz=tb:option(DummyValue,"size",translate("Size"))
 ck=tb:option(DummyValue,"check",translate("Grammar Check"))
+st.template="openclash/cfg_check"
 ck.template="openclash/cfg_check"
-nm.template="openclash/sub_info_show"
+sb.template="openclash/sub_info_show"
 
 btnis=tb:option(Button,"switch",translate("Switch Config"))
 btnis.template="openclash/other_button"
@@ -230,7 +231,6 @@ btned.write=function(a,t)
 	HTTP.redirect(DISP.build_url("admin", "services", "openclash", "other-file-edit", "config", "%s") %file_path)
 end
 
-
 btncp=tb:option(Button,"copy",translate("Copy Config"))
 btncp.template="openclash/other_button"
 btncp.render=function(o,t,a)
@@ -253,6 +253,14 @@ btncp.write=function(a,t)
 		end
 	end
 	HTTP.redirect(luci.dispatcher.build_url("admin", "services", "openclash", "config"))
+end
+
+btnrn=tb:option(DummyValue,"/etc/openclash/config/",translate("Rename"))
+btnrn.template="openclash/input_rename"
+btnrn.rawhtml = true
+btnrn.render=function(c,t,a)
+c.value = e[t].name
+Button.render(c,t,a)
 end
 
 btndl = tb:option(Button,"download",translate("Download Config"))
